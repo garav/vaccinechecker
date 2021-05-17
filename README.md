@@ -25,10 +25,7 @@ if the search is needed for a particular district then district.
 _pincode_: Enter the pincode of the area where vaccine is needed and if the runtype selected is pincode.
 else leave it as default.
 
-_stateId_: Leave this option as default in pincode is selected as runtype. Else, choose the value
-from below section State List and enter the state id from it.
-
-_district_: Name of the district where vaccination is needed. Leave it default if runtype is pincode.
+_district_id_: The district Id where the vaccination is needed(Needed only if district is selected in runtype.). You can find the district id from districts directory in this project.
 
 _vaccine_: Either of the 3 options - [COVISHIELD, COVAXIN, ANY]. 
 If COVISHIELD is chosen then the alerts will generated only if COVISHIELD is available. The same goes for COVAXIN.
