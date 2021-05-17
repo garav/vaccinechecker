@@ -35,7 +35,8 @@ _min_age_limit_: Choose 18 if the age range is between 18-45. Choose 45 if the a
 
 
 After filling the config.json, open a command prompt
-and run setup.cmd.
+and run:
+`setup.cmd`
 
 The vaccine tracker will now run continuously and 
 check for any open slots. It will notify you with 
