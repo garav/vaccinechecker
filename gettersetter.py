@@ -17,9 +17,9 @@ class gettersetter:
 
     @vaccine.setter
     def vaccine(self, a):
-        if a.upper() not in ['COVAXIN','COVISHIELD','BOTH']:
-            raise ValueError("Sorry you age is below eligibility criteria")
-        if a.upper() == 'BOTH':
+        if a.upper() not in ['COVAXIN','COVISHIELD','BOTH','ANY']:
+            raise ValueError("Sorry enter the correct value of vaccine")
+        if a.upper() == 'BOTH' or a.upper() == 'ANY':
             self._vaccine = ['COVAXIN','COVISHIELD']
         else:
             self._vaccine = a.upper()
