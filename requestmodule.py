@@ -26,7 +26,13 @@ class requestpin:
 
     def requestfunc(self, api, params=''):
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.get(self.url + api, params=params, headers=self.headers, verify=False)
+        proxies = {
+            'http': 'http://125.162.108.5:8080',
+            #'https': 'http://14.241.225.134:80',
+            'https': 'http://186.225.117.58:80'
+        }
+        #r = requests.get(self.url + api, params=params, headers=self.headers, verify=False)
+        r = requests.get(self.url + api, params=params, headers=self.headers, verify=False, proxies=proxies)
         if r.status_code != 200:
             if r.status_code == 403:
                 print("Threshhold achieved. Waiting for a minute and then restarting.")
@@ -58,16 +64,21 @@ class requestpin:
         :param vaccine:
         :return: NULL
         """
-        logger.info("Running QuerybyPIN")
-        api = '/api/v2/appointment/sessions/public/findByPin'
-        for pincode in pincodes:
-            self.requestfunc(api, 'pincode={}&date={}'.format(pincode,date))
-            if self.checkavailability(min_age_limit, vaccine) == 1:
-                self.ring_alarm()
-            self.sleep(3)   # Wait for few seconds for next query.
+        s = time.time()
+        i = 0
+        while True:
+            #logger.info("Running QuerybyPIN")
+            i = i + 1
+            api = '/api/v2/appointment/sessions/public/findByPin'
+            for pincode in pincodes:
+                print("Hitting api in {} seconds.".format(time.time()-s))
+                self.requestfunc(api, 'pincode={}&date={}'.format(pincode,date))
+                if self.checkavailability(min_age_limit, vaccine) == 1:
+                    self.ring_alarm()
+                self.sleep(20)   # Wait for few seconds for next query.
 
         # Recurse the Function
-        self.querybypin(pincodes, date, min_age_limit, vaccine)
+        # self.querybypin(pincodes, date, min_age_limit, vaccine)
         
 
     def querybydistrictid(self, districtids, date, min_age_limit, vaccine):
@@ -81,16 +92,17 @@ class requestpin:
         :param vaccine:
         :return: NULL
         """
-        
-        api = '/api/v2/appointment/sessions/public/findByDistrict'
-        for id in districtids:
-            self.requestfunc(api, 'district_id={}&date={}'.format(id,date))
-            if self.checkavailability(min_age_limit, vaccine) == 1:
-                self.ring_alarm()
-            self.sleep(3)   # Wait for few seconds for next query.
+        while True:
+            api = '/api/v2/appointment/sessions/public/findByDistrict'
+            logger.info("Hitting API {}".format(api))
+            for id in districtids:
+                self.requestfunc(api, 'district_id={}&date={}'.format(id,date))
+                if self.checkavailability(min_age_limit, vaccine) == 1:
+                    self.ring_alarm()
+                self.sleep(20)   # Wait for few seconds for next query.
 
         # Recurse the Function
-        self.querybydistrictid(districtids, date, min_age_limit, vaccine)
+        # self.querybydistrictid(districtids, date, min_age_limit, vaccine)
 
     def checkavailability(self, min_age_limit, vaccine=['COVAXIN','COVISHIELD']):
         """

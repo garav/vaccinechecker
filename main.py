@@ -42,7 +42,7 @@ if __name__ == '__main__':
         elif session.runtype == 'DISTRICT':
         
             session.district_ids = data['district_id']
-            print('Finding Slots for vaccine {} on {} where allowed minimum age limit is {} and the area pincode is {}'.format(session.vaccine,session.date, session.min_age, ' & '.join(session.district_ids)))
+            print('Finding Slots for vaccine {} on {} where allowed minimum age limit is {} and the DISTRICT Id is {}'.format(session.vaccine,session.date, session.min_age, ' & '.join(session.district_ids)))
             
             print('*****************APPLICATION RUNNING - FINDING SLOTS********************************')
             r = requestpin()

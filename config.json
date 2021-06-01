@@ -1,8 +1,8 @@
 {
   "date": "16-05-2021",
-  "runtype": "district",
-  "pincode": "201301",
-  "district_id": "650",
+  "runtype": "pincode",
+  "pincode": "248171",
+  "district_id": "697",
   "vaccine": "COVAXIN",
   "min_age_limit": "18"
 }
